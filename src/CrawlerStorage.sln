@@ -17,6 +17,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerStorage.Common.Const
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerStorage.Data", "Data\CrawlerStorage.Data\CrawlerStorage.Data.csproj", "{47CF860C-24E8-41F5-9881-7ADF43218675}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerStorage.Data.Models", "Data\CrawlerStorage.Data.Models\CrawlerStorage.Data.Models.csproj", "{6E12B747-5290-44B7-8B0F-05116F006416}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerStorage.Services", "Services\CrawlerStorage.Services\CrawlerStorage.Services.csproj", "{E62702EC-FF16-454D-BA51-C4E15551F7F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerStorage.Data.Common", "Data\CrawlerStorage.Data.Common\CrawlerStorage.Data.Common.csproj", "{EA30C5D3-EFC3-4F8D-8FBD-D24BA6E100FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerStorage.Services.Automapper", "Services\CrawlerStorage.Services.Automapper\CrawlerStorage.Services.Automapper.csproj", "{D3C0BD19-D3B8-4297-81E3-5CFA8EE7E4AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +43,22 @@ Global
 		{47CF860C-24E8-41F5-9881-7ADF43218675}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47CF860C-24E8-41F5-9881-7ADF43218675}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47CF860C-24E8-41F5-9881-7ADF43218675}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E12B747-5290-44B7-8B0F-05116F006416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E12B747-5290-44B7-8B0F-05116F006416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E12B747-5290-44B7-8B0F-05116F006416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E12B747-5290-44B7-8B0F-05116F006416}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E62702EC-FF16-454D-BA51-C4E15551F7F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E62702EC-FF16-454D-BA51-C4E15551F7F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E62702EC-FF16-454D-BA51-C4E15551F7F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E62702EC-FF16-454D-BA51-C4E15551F7F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA30C5D3-EFC3-4F8D-8FBD-D24BA6E100FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA30C5D3-EFC3-4F8D-8FBD-D24BA6E100FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA30C5D3-EFC3-4F8D-8FBD-D24BA6E100FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA30C5D3-EFC3-4F8D-8FBD-D24BA6E100FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3C0BD19-D3B8-4297-81E3-5CFA8EE7E4AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3C0BD19-D3B8-4297-81E3-5CFA8EE7E4AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3C0BD19-D3B8-4297-81E3-5CFA8EE7E4AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3C0BD19-D3B8-4297-81E3-5CFA8EE7E4AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +67,10 @@ Global
 		{84D17C61-C5F3-479A-A008-ABB82CE7EFD9} = {95D3096B-CA6B-4714-A0B9-7D3FA3178580}
 		{F635B22D-E834-4321-845C-EA929E48AE59} = {CB62089F-1A0E-427A-ACD8-492819704068}
 		{47CF860C-24E8-41F5-9881-7ADF43218675} = {84985B38-641C-462F-8458-2969F5EF9DEF}
+		{6E12B747-5290-44B7-8B0F-05116F006416} = {84985B38-641C-462F-8458-2969F5EF9DEF}
+		{E62702EC-FF16-454D-BA51-C4E15551F7F5} = {3D1F099B-E9F4-45FF-84A0-308DE4EE53B2}
+		{EA30C5D3-EFC3-4F8D-8FBD-D24BA6E100FA} = {84985B38-641C-462F-8458-2969F5EF9DEF}
+		{D3C0BD19-D3B8-4297-81E3-5CFA8EE7E4AE} = {3D1F099B-E9F4-45FF-84A0-308DE4EE53B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0622D05A-1BC8-437C-99E5-467449C5FADD}
