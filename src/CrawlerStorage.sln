@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{95D3096B-CA6B-4714-A0B9-7D3FA3178580}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerStorage.WebAPI", "Web\CrawlerStorage.WebAPI\CrawlerStorage.WebAPI.csproj", "{84D17C61-C5F3-479A-A008-ABB82CE7EFD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{84985B38-641C-462F-8458-2969F5EF9DEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{CB62089F-1A0E-427A-ACD8-492819704068}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{3D1F099B-E9F4-45FF-84A0-308DE4EE53B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerStorage.Common.Constants", "Common\CrawlerStorage.Common.Constants\CrawlerStorage.Common.Constants.csproj", "{F635B22D-E834-4321-845C-EA929E48AE59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerStorage.Data", "Data\CrawlerStorage.Data\CrawlerStorage.Data.csproj", "{47CF860C-24E8-41F5-9881-7ADF43218675}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84D17C61-C5F3-479A-A008-ABB82CE7EFD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84D17C61-C5F3-479A-A008-ABB82CE7EFD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84D17C61-C5F3-479A-A008-ABB82CE7EFD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84D17C61-C5F3-479A-A008-ABB82CE7EFD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F635B22D-E834-4321-845C-EA929E48AE59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F635B22D-E834-4321-845C-EA929E48AE59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F635B22D-E834-4321-845C-EA929E48AE59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F635B22D-E834-4321-845C-EA929E48AE59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47CF860C-24E8-41F5-9881-7ADF43218675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47CF860C-24E8-41F5-9881-7ADF43218675}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47CF860C-24E8-41F5-9881-7ADF43218675}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47CF860C-24E8-41F5-9881-7ADF43218675}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{84D17C61-C5F3-479A-A008-ABB82CE7EFD9} = {95D3096B-CA6B-4714-A0B9-7D3FA3178580}
+		{F635B22D-E834-4321-845C-EA929E48AE59} = {CB62089F-1A0E-427A-ACD8-492819704068}
+		{47CF860C-24E8-41F5-9881-7ADF43218675} = {84985B38-641C-462F-8458-2969F5EF9DEF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0622D05A-1BC8-437C-99E5-467449C5FADD}
+	EndGlobalSection
+EndGlobal
