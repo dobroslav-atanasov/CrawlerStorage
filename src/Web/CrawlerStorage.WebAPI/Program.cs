@@ -3,8 +3,10 @@ using System.Reflection;
 using Asp.Versioning;
 
 using CrawlerStorage.Common.Constants;
+using CrawlerStorage.Data;
 using CrawlerStorage.WebAPI.Infrastructure.Middlewares;
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 using Serilog;
@@ -34,6 +36,12 @@ builder.Host.UseSerilog(Log.Logger);
 
 // Automapper
 builder.Services.AddAutoMapper(Assembly.Load(GlobalConstants.ASSEMBLY_AUTOMAPPER));
+
+// Database
+builder.Services.AddDbContext<CrawlerStorageDbContext>(options =>
+{
+    options.UseInMemoryDatabase("InMemory");
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

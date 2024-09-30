@@ -10,4 +10,8 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\CrawlerStorage.Data.Models\CrawlerStorage.Data.Models.csproj" />
+  </ItemGroup>
+
 </Project>
