@@ -396,3 +396,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+/src/Web/CrawlerStorage.WebAPI/appsettings.json
+/src/Web/CrawlerStorage.WebAPI/appsettings.Development.json
+/src/Data/CrawlerStorage.Data/Migrations
