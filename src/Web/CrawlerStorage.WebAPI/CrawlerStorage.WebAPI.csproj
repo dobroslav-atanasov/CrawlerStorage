@@ -13,4 +13,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\CrawlerStorage.Common.Constants\CrawlerStorage.Common.Constants.csproj" />
+    <ProjectReference Include="..\..\Services\CrawlerStorage.Services.Automapper\CrawlerStorage.Services.Automapper.csproj" />
+    <ProjectReference Include="..\..\Services\CrawlerStorage.Services\CrawlerStorage.Services.csproj" />
+    <ProjectReference Include="..\CrawlerStorage.WebAPI.Infrastructure\CrawlerStorage.WebAPI.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
