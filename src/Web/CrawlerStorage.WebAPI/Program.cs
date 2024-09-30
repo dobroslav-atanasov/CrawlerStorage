@@ -1,4 +1,8 @@
+using System.Reflection;
+
 using Asp.Versioning;
+
+using CrawlerStorage.Common.Constants;
 
 using Microsoft.OpenApi.Models;
 
@@ -16,7 +20,8 @@ builder.Services.AddApiVersioning(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 
-// Add services to the container.
+// Automapper
+builder.Services.AddAutoMapper(Assembly.Load(GlobalConstants.ASSEMBLY_AUTOMAPPER));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
