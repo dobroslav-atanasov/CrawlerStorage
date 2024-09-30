@@ -6,4 +6,8 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\CrawlerStorage.Data\CrawlerStorage.Data.csproj" />
+  </ItemGroup>
+
 </Project>
