@@ -19,20 +19,22 @@ public class CrawlersController : BaseController
         this.context = context;
     }
 
-    [HttpGet]
+    [HttpGet(Name = nameof(GetAll))]
     public async Task<IActionResult> GetAll()
     {
         var crawlerReadDtos = this.mapper.Map<IEnumerable<CrawlerReadDto>>(this.context.Crawlers);
         return this.Ok(crawlerReadDtos);
     }
 
-    [HttpGet("{id}", Name = "GetById")]
-    public IActionResult GetById(int id)
+    [HttpGet("{id}", Name = nameof(GetById))]
+    public async Task<IActionResult> GetById(int id)
     {
-        return this.Ok(id);
+        var crawlerReadDto = this.mapper.Map<CrawlerReadDto>(this.context.Crawlers.Find(id));
+
+        return this.Ok(crawlerReadDto);
     }
 
-    [HttpPost]
+    [HttpPost(Name = nameof(Create))]
     public async Task<IActionResult> Create(CrawlerCreateDto model)
     {
         var crawler = this.mapper.Map<Crawler>(model);
