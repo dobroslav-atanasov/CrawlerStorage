@@ -1,14 +1,17 @@
 ﻿namespace CrawlerStorage.WebAPI.Infrastructure.Middlewares;
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 public class LoggingMiddleware
 {
     private readonly RequestDelegate next;
+    private readonly ILogger<LoggingMiddleware> logger;
 
-    public LoggingMiddleware(RequestDelegate next)
+    public LoggingMiddleware(RequestDelegate next, ILogger<LoggingMiddleware> logger)
     {
         this.next = next;
+        this.logger = logger;
     }
 
     public async Task Invoke(HttpContext context)
@@ -19,13 +22,8 @@ public class LoggingMiddleware
         }
         catch (Exception ex)
         {
-            await this.LogError(ex);
+            this.logger.LogError(ex.Message);
             throw;
         }
-    }
-
-    private async Task LogError(Exception ex)
-    {
-        throw new NotImplementedException();
     }
 }
