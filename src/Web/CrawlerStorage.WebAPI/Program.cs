@@ -16,10 +16,10 @@ builder.Services.AddApiVersioning(options =>
     options.DefaultApiVersion = new ApiVersion(1, 0);
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.ReportApiVersions = true;
-    options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(), new HeaderApiVersionReader("x-api-version"));
+    options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(), new HeaderApiVersionReader(GlobalConstants.API_VERSION_HEADER));
 }).AddApiExplorer(options =>
 {
-    options.GroupNameFormat = "'v'VVV";
+    options.GroupNameFormat = GlobalConstants.API_VERSION_NAME;
     options.SubstituteApiVersionInUrl = true;
 });
 
@@ -44,8 +44,6 @@ builder.Services.AddSwaggerGen(setup =>
 });
 
 var app = builder.Build();
-
-//app.UseSerilogRequestLogging();
 
 app.UseMiddleware<LoggingMiddleware>();
 
