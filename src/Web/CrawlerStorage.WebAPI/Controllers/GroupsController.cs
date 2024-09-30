@@ -1,5 +1,5 @@
 ﻿namespace CrawlerStorage.WebAPI.Controllers;
 
-public class GroupsController
+public class GroupsController : BaseController
 {
 }

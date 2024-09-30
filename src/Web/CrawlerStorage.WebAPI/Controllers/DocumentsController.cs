@@ -1,5 +1,5 @@
 ﻿namespace CrawlerStorage.WebAPI.Controllers;
 
-public class DocumentsController
+public class DocumentsController : BaseController
 {
 }
