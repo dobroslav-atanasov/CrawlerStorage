@@ -4,6 +4,7 @@ using Asp.Versioning;
 
 using CrawlerStorage.Common.Constants;
 using CrawlerStorage.Data;
+using CrawlerStorage.Data.Repositories;
 using CrawlerStorage.WebAPI.Infrastructure.Middlewares;
 
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,9 @@ builder.Services.AddDbContext<CrawlerStorageDbContext>(options =>
 {
     options.UseInMemoryDatabase("InMemory");
 });
+
+// Repositories
+builder.Services.AddScoped(typeof(CrawlerStorageRepository<>));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

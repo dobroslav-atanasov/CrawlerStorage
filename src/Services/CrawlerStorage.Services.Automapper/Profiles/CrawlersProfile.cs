@@ -3,7 +3,7 @@
 using AutoMapper;
 
 using CrawlerStorage.Data.Models.DbEntities;
-using CrawlerStorage.Data.Models.Dtos;
+using CrawlerStorage.Data.Models.Dtos.Crawlers;
 
 public class CrawlersProfile : Profile
 {
