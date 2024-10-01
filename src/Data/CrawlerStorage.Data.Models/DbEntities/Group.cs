@@ -9,7 +9,7 @@ using CrawlerStorage.Data.Common.Models;
 public class Group : BaseEntity<int>
 {
     [Required]
-    [Column(TypeName = "UNIQUEIDENTIFIER")]
+    [Column(TypeName = "UUID")]
     public Guid Identifier { get; set; }
 
     [Required]
@@ -27,7 +27,7 @@ public class Group : BaseEntity<int>
     public int OperationId { get; set; }
     public virtual Operation Operation { get; set; }
 
-    [Column(TypeName = "VARBINARY(MAX)")]
+    [Column(TypeName = "BYTEA")]
     public byte[] Content { get; set; }
 
     public virtual ICollection<Document> Documents { get; set; } = [];

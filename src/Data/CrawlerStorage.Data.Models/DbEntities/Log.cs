@@ -12,7 +12,7 @@ public class Log : BaseEntity<int>
     //public DateTime LogDate { get; set; }
 
     [Required]
-    [Column(TypeName = "UNIQUEIDENTIFIER")]
+    [Column(TypeName = "UUID")]
     public Guid Identifier { get; set; }
 
     [Required]

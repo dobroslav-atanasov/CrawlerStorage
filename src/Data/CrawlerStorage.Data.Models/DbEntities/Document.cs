@@ -9,7 +9,7 @@ using CrawlerStorage.Data.Common.Models;
 public class Document : BaseEntity<int>
 {
     [Required]
-    [Column(TypeName = "UNIQUEIDENTIFIER")]
+    [Column(TypeName = "UUID")]
     public Guid Identifier { get; set; }
 
     [Required]
