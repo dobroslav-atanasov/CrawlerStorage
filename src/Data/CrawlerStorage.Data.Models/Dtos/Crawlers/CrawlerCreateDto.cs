@@ -1,4 +1,4 @@
-﻿namespace CrawlerStorage.Data.Models.Dtos;
+﻿namespace CrawlerStorage.Data.Models.Dtos.Crawlers;
 
 public class CrawlerCreateDto
 {
