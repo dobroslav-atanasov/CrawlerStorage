@@ -41,7 +41,8 @@ builder.Services.AddAutoMapper(Assembly.Load(GlobalConstants.ASSEMBLY_AUTOMAPPER
 // Database
 builder.Services.AddDbContext<CrawlerStorageDbContext>(options =>
 {
-    options.UseInMemoryDatabase("InMemory");
+    options.UseNpgsql(builder.Configuration.GetConnectionString("CrawlerStorageDb"));
+    //options.UseInMemoryDatabase("InMemory");
 });
 
 // Repositories
