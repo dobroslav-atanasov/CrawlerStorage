@@ -77,4 +77,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// TODO: Prepare DB
+var context = app.Services.GetService<CrawlerStorageDbContext>();
+PrepareDatabase.Migrate(context);
+
 app.Run();
