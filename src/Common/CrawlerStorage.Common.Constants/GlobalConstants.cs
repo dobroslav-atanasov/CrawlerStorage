@@ -9,4 +9,6 @@ public static class GlobalConstants
 
     public const string ASSEMBLY_AUTOMAPPER = "CrawlerStorage.Services.Automapper";
     public const string LOG_FILE_PATH = "Logs/log.txt";
+
+    public const string CRAWLER_STORAGE_CONNECTION_STRING = "CrawlerStorageDb";
 }
