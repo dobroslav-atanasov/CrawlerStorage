@@ -2,7 +2,9 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public abstract class BaseEntity<TKey>
+using CrawlerStorage.Data.Common.Interfaces;
+
+public abstract class BaseEntity<TKey> : ICheckableEntity
 {
     [Key]
     public TKey Id { get; set; }
