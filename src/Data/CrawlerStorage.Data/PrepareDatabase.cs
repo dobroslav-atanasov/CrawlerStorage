@@ -1,18 +1,36 @@
 ﻿namespace CrawlerStorage.Data;
 
-using System;
+using CrawlerStorage.Data.Models.DbEntities;
+using CrawlerStorage.Data.Models.Enumerations;
 
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 public static class PrepareDatabase
 {
-    public static void Migrate(CrawlerStorageDbContext context)
+    public static void Population(IApplicationBuilder app)
     {
-        context.Database.Migrate();
+        using var serviceScope = app.ApplicationServices.CreateScope();
+
+        SeedData(serviceScope.ServiceProvider.GetService<CrawlerStorageDbContext>());
     }
 
     private static void SeedData(CrawlerStorageDbContext context)
     {
-        throw new NotImplementedException();
+        context.Database.Migrate();
+
+        if (!context.Operations.Any())
+        {
+            context.AddRange(
+               new Operation { Name = nameof(OperationType.None) },
+               new Operation { Name = nameof(OperationType.Add) },
+               new Operation { Name = nameof(OperationType.Update) },
+               new Operation { Name = nameof(OperationType.Delete) },
+               new Operation { Name = nameof(OperationType.Error) }
+            );
+
+            context.SaveChanges();
+        }
     }
 }
