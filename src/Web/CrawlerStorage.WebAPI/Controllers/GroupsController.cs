@@ -37,8 +37,24 @@ public class GroupsController : BaseController
     [HttpPost(Name = nameof(CreateGroup))]
     public async Task<IActionResult> CreateGroup(GroupInputDto model)
     {
-        var groupDto = await this.groupsService.ProcessAsync(model);
+        var group = await this.groupsService.CreateAsync(model);
 
-        return this.Ok();
+        if (group != null)
+        {
+            await this.groupsService.ProcessAsync(group);
+
+            var dbGroup = await this.repository.GetAsync(x => x.Name == group.Name && x.CrawlerId == model.CrawlerId);
+            if (dbGroup == null)
+            {
+                await this.repository.AddAsync(group);
+                await this.repository.SaveChangesAsync();
+            }
+            else
+            {
+                //TODO update
+            }
+        }
+
+        return this.BadRequest();
     }
 }
