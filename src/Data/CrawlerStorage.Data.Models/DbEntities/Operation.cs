@@ -15,6 +15,4 @@ public class Operation : BaseEntity<int>
     public virtual ICollection<Document> Documents { get; set; } = [];
 
     public virtual ICollection<Group> Groups { get; set; } = [];
-
-    public virtual ICollection<Log> Logs { get; set; } = [];
 }

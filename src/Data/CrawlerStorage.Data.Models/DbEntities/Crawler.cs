@@ -13,6 +13,4 @@ public class Crawler : BaseEntity<int>
     public string Name { get; set; }
 
     public virtual ICollection<Group> Groups { get; set; } = [];
-
-    public virtual ICollection<Log> Logs { get; set; } = [];
 }
