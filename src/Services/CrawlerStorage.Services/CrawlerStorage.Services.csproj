@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\CrawlerStorage.Common.Helpers\CrawlerStorage.Common.Helpers.csproj" />
     <ProjectReference Include="..\..\Data\CrawlerStorage.Data\CrawlerStorage.Data.csproj" />
   </ItemGroup>
 
