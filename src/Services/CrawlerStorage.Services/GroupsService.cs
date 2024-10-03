@@ -24,7 +24,7 @@ public class GroupsService : IGroupsService
         {
             switch (input.CrawlerId)
             {
-                case 1:
+                case 2:
                     var responseAsString = await response.Content.ReadAsStringAsync();
                     while (responseAsString == "Rate Limit Exceeded")
                     {
@@ -35,26 +35,37 @@ public class GroupsService : IGroupsService
                     break;
             }
 
-            var name = this.CreateGroupName(input.Url);
-            var documents = this.CreateDocument(response);
+            var name = this.CreateNameFromUrl(input.Url);
+            var documentDto = await this.CreateDocumentAsync(response, input.Url);
 
             return new GroupCreateDto
             {
                 Name = name,
                 CrawlerId = input.CrawlerId,
-                Documents = documents
+                Documents = [documentDto]
             };
         }
 
         return null;
     }
 
-    private List<DocumentDto> CreateDocument(HttpResponseMessage response)
+    private async Task<DocumentDto> CreateDocumentAsync(HttpResponseMessage response, string url)
     {
-        throw new NotImplementedException();
+        var name = this.CreateNameFromUrl(url);
+        var documentDto = new DocumentDto
+        {
+            Name = name.ToLower(),
+            Format = response.Content.Headers.ContentType?.MediaType,
+            Url = url,
+            Content = await response.Content.ReadAsByteArrayAsync(),
+            Encoding = (response.Content.Headers.ContentType?.CharSet) ?? "utf-8",
+            Order = 1
+        };
+
+        return documentDto;
     }
 
-    private string CreateGroupName(string url)
+    private string CreateNameFromUrl(string url)
     {
         var uri = new Uri(url);
         return $"{uri.Host}_{string.Join("_", uri.Segments.Where(x => x != "/").Select(x => x.Replace("/", string.Empty)))}";
