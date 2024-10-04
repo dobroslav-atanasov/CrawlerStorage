@@ -14,5 +14,5 @@ public class GroupDto
 
     public byte[] Content { get; set; }
 
-    public ICollection<DocumentDto> Documents { get; set; } = [];
+    public List<DocumentDto> Documents { get; set; } = [];
 }
