@@ -1,6 +1,6 @@
 ﻿namespace CrawlerStorage.Common.Helpers;
 
-using CrawlerStorage.Data.Models.DbEntities;
+using CrawlerStorage.Data.Models.Dtos.Groups;
 using CrawlerStorage.Data.Models.Zip;
 
 using ICSharpCode.SharpZipLib.Zip;
@@ -45,7 +45,7 @@ public static class ZipHelper
         return zipModels;
     }
 
-    public static byte[] ZipGroup(Group group)
+    public static byte[] ZipGroup(GroupDto group)
     {
         using var memoryStream = new MemoryStream();
         using var zipOutputStream = new ZipOutputStream(memoryStream);
