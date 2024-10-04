@@ -24,7 +24,6 @@ public class GroupsService : IGroupsService
         {
             documentDto.Identifier = Guid.NewGuid();
             documentDto.MD5 = MD5Helper.Hash(documentDto.Content);
-            //document.OperationId = (int)OperationType.Add;
         }
 
         var folder = groupDto.Name;
@@ -43,7 +42,7 @@ public class GroupsService : IGroupsService
         {
             switch (input.CrawlerId)
             {
-                case 2:
+                case 1:
                     var responseAsString = await response.Content.ReadAsStringAsync();
                     while (responseAsString == "Rate Limit Exceeded")
                     {
@@ -51,6 +50,9 @@ public class GroupsService : IGroupsService
                         response = await this.httpClient.GetAsync(input.Url);
                         responseAsString = await response.Content.ReadAsStringAsync();
                     }
+
+                    // TODO cut only div  //div[@class='container']
+
                     break;
             }
 
@@ -88,5 +90,81 @@ public class GroupsService : IGroupsService
     {
         var uri = new Uri(url);
         return $"{uri.Host}_{string.Join("_", uri.Segments.Where(x => x != "/").Select(x => x.Replace("/", string.Empty)))}".ToLower();
+    }
+
+    public bool CheckForUpdate(GroupDto groupDto, GroupDto dbGroupDto)
+    {
+        var isUpdated = false;
+        foreach (var documentDto in groupDto.Documents)
+        {
+            var dbDocumentDto = dbGroupDto
+                .Documents
+                .Where(x => x.Name == documentDto.Name)
+                .FirstOrDefault();
+
+            if (dbDocumentDto == null)
+            {
+                isUpdated = true;
+            }
+            else
+            {
+                if (documentDto.MD5 != dbDocumentDto.MD5 || documentDto.Format != dbDocumentDto.Format)
+                {
+                    isUpdated = true;
+                }
+            }
+        }
+
+        foreach (var document in dbGroupDto.Documents)
+        {
+            if (!groupDto.Documents.Where(d => d.Name == document.Name).Any())
+            {
+                isUpdated = true;
+            }
+        }
+
+        return isUpdated;
+    }
+
+    public void Update(GroupDto groupDto, GroupDto dbGroupDto)
+    {
+        dbGroupDto.OperationId = (int)OperationType.Update;
+        dbGroupDto.Content = groupDto.Content;
+
+        //foreach (var document in groupDto.Documents)
+        //{
+        //    if (document.Operation == (int)OperationType.Add)
+        //    {
+        //        document.Operation = (int)OperationType.Add;
+        //        group.Documents.Add(document);
+        //    }
+
+        //    if (document.Operation == (int)OperationType.Update)
+        //    {
+        //        var doc = group.Documents.Single(d => d.Name == document.Name);
+        //        doc.Operation = (int)OperationType.Update;
+        //        doc.Format = document.Format;
+        //        doc.Url = document.Url;
+        //        doc.MD5 = document.MD5;
+        //    }
+
+        //    if (document.Operation == (int)OperationType.None)
+        //    {
+        //        var doc = group.Documents.Single(d => d.Name == document.Name);
+        //        doc.Operation = (int)OperationType.None;
+        //    }
+        //}
+
+        //foreach (var document in oldGroup.Documents)
+        //{
+        //    if (document.Operation == (int)OperationType.Delete)
+        //    {
+        //        var doc = group.Documents.FirstOrDefault(d => d.Name == document.Name);
+        //        if (doc != null)
+        //        {
+        //            doc.Operation = document.Operation;
+        //        }
+        //    }
+        //}
     }
 }

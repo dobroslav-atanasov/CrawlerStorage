@@ -10,7 +10,8 @@ public class GroupsProfile : Profile
     public GroupsProfile()
     {
         this.CreateMap<GroupDto, Group>()
-            .ForMember(x => x.Documents, opt => opt.MapFrom(src => src.Documents));
+            .ForMember(x => x.Documents, opt => opt.MapFrom(src => src.Documents))
+            .ReverseMap();
 
         this.CreateMap<Group, GroupReadDto>();
     }

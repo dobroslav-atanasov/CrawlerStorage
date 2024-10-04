@@ -9,6 +9,7 @@ public class DocumentsProfile : Profile
 {
     public DocumentsProfile()
     {
-        this.CreateMap<DocumentDto, Document>();
+        this.CreateMap<DocumentDto, Document>()
+            .ReverseMap();
     }
 }

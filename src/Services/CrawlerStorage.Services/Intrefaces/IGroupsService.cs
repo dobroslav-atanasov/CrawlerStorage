@@ -6,5 +6,9 @@ public interface IGroupsService
 {
     Task<GroupDto> CreateAsync(GroupInputDto input);
 
-    Task ProcessAsync(GroupDto group);
+    Task ProcessAsync(GroupDto groupDto);
+
+    bool CheckForUpdate(GroupDto groupDto, GroupDto dbGroupDto);
+
+    void Update(GroupDto groupDto, GroupDto dbGroupDto);
 }
