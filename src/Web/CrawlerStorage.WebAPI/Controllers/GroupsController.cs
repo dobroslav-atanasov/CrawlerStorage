@@ -37,17 +37,22 @@ public class GroupsController : BaseController
     [HttpPost(Name = nameof(CreateGroup))]
     public async Task<IActionResult> CreateGroup(GroupInputDto model)
     {
-        var group = await this.groupsService.CreateAsync(model);
+        var groupDto = await this.groupsService.CreateAsync(model);
 
-        if (group != null)
+        if (groupDto != null)
         {
-            await this.groupsService.ProcessAsync(group);
+            await this.groupsService.ProcessAsync(groupDto);
 
-            var dbGroup = await this.repository.GetAsync(x => x.Name == group.Name && x.CrawlerId == model.CrawlerId);
+            var dbGroup = await this.repository.GetAsync(x => x.Name == groupDto.Name && x.CrawlerId == model.CrawlerId);
             if (dbGroup == null)
             {
+                var group = this.mapper.Map<Group>(groupDto);
                 await this.repository.AddAsync(group);
                 await this.repository.SaveChangesAsync();
+
+                var groupReadDto = this.mapper.Map<GroupReadDto>(group);
+
+                return this.CreatedAtRoute(nameof(GetGroupById), new { group.Id }, groupReadDto);
             }
             else
             {
