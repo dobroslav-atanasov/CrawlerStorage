@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 
 using CrawlerStorage.Common.Helpers;
-using CrawlerStorage.Data.Models.DbEntities;
+using CrawlerStorage.Data.Models.Dtos.Documents;
 using CrawlerStorage.Data.Models.Dtos.Groups;
 using CrawlerStorage.Data.Models.Enumerations;
 using CrawlerStorage.Services.Intrefaces;
@@ -18,52 +18,24 @@ public class GroupsService : IGroupsService
         this.httpClient = httpClient;
     }
 
-    public async Task ProcessAsync(Group group)
+    public async Task ProcessAsync(GroupDto groupDto)
     {
-        foreach (var document in group.Documents)
+        foreach (var documentDto in groupDto.Documents)
         {
-            document.Identifier = Guid.NewGuid();
-            document.MD5 = MD5Helper.Hash(document.Content);
-            document.OperationId = (int)OperationType.Add;
+            documentDto.Identifier = Guid.NewGuid();
+            documentDto.MD5 = MD5Helper.Hash(documentDto.Content);
+            //document.OperationId = (int)OperationType.Add;
         }
 
-        var folder = group.Name;
+        var folder = groupDto.Name;
         var zipFolderName = $"{folder}.zip";
-        group.Name = zipFolderName;
-        group.Identifier = Guid.NewGuid();
-        group.OperationId = (int)OperationType.Add;
-        group.Content = ZipHelper.ZipGroup(group);
-
-        //var dbGroup = await this.GetGroupAsync(group.CrawlerId, group.Name);
-
-        //if (dbGroup == null)
-        //{
-        //    await this.AddGroupAsync(group);
-        //    var log = new Log
-        //    {
-        //        Identifier = group.Identifier,
-        //        LogDate = DateTime.UtcNow,
-        //        Operation = (int)OperationType.Add,
-        //        CrawlerId = group.CrawlerId,
-        //    };
-        //    await this.logsService.AddLogAsync(log);
-        //}
-        //else
-        //{
-        //    var isUpdated = this.CheckForUpdate(group, dbGroup);
-        //    if (isUpdated)
-        //    {
-        //        await this.UpdateGroupAsync(group, dbGroup);
-        //        await this.logsService.UpdateLogAsync(dbGroup.Identifier, (int)OperationType.Update);
-        //    }
-        //    else
-        //    {
-        //        await this.logsService.UpdateLogAsync(dbGroup.Identifier, (int)OperationType.None);
-        //    }
-        //}
+        groupDto.Name = zipFolderName;
+        groupDto.Identifier = Guid.NewGuid();
+        groupDto.OperationId = (int)OperationType.Add;
+        groupDto.Content = ZipHelper.ZipGroup(groupDto);
     }
 
-    public async Task<Group> CreateAsync(GroupInputDto input)
+    public async Task<GroupDto> CreateAsync(GroupInputDto input)
     {
         var response = await this.httpClient.GetAsync(input.Url);
 
@@ -85,7 +57,7 @@ public class GroupsService : IGroupsService
             var name = this.CreateNameFromUrl(input.Url);
             var documentDto = await this.CreateDocumentAsync(response, input.Url);
 
-            return new Group
+            return new GroupDto
             {
                 Name = name,
                 CrawlerId = input.CrawlerId,
@@ -96,10 +68,10 @@ public class GroupsService : IGroupsService
         return null;
     }
 
-    private async Task<Document> CreateDocumentAsync(HttpResponseMessage response, string url)
+    private async Task<DocumentDto> CreateDocumentAsync(HttpResponseMessage response, string url)
     {
         var name = this.CreateNameFromUrl(url);
-        var document = new Document
+        var documentDto = new DocumentDto
         {
             Name = name.ToLower(),
             Format = response.Content.Headers.ContentType?.MediaType,
@@ -109,7 +81,7 @@ public class GroupsService : IGroupsService
             Order = 1
         };
 
-        return document;
+        return documentDto;
     }
 
     private string CreateNameFromUrl(string url)

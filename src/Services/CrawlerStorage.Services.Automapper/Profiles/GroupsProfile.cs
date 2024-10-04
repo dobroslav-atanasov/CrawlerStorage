@@ -11,5 +11,7 @@ public class GroupsProfile : Profile
     {
         this.CreateMap<GroupDto, Group>()
             .ForMember(x => x.Documents, opt => opt.MapFrom(src => src.Documents));
+
+        this.CreateMap<Group, GroupReadDto>();
     }
 }
