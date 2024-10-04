@@ -25,7 +25,10 @@ public class GroupsController : BaseController
     [HttpGet(Name = nameof(GetAllGroups))]
     public async Task<IActionResult> GetAllGroups()
     {
-        return this.Ok();
+        var groups = this.repository.AllAsNoTracking();
+        var groupReadDtos = this.mapper.Map<IEnumerable<GroupReadDto>>(groups);
+
+        return this.Ok(groupReadDtos);
     }
 
     [HttpGet("{id}", Name = nameof(GetGroupById))]
