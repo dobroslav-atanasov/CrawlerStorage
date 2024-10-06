@@ -12,8 +12,6 @@ public class DocumentDto
 
     public string Url { get; set; }
 
-    public int Operation { get; set; }
-
     public string Encoding { get; set; }
 
     public string MD5 { get; set; }
