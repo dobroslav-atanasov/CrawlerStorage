@@ -59,7 +59,10 @@ public class GroupsController : BaseController
             }
             else
             {
-                //TODO update
+                var dbGroupDto = this.mapper.Map<GroupDto>(dbGroup);
+                var isUpdated = this.groupsService.CheckForUpdate(groupDto, dbGroupDto);
+
+                return this.NoContent();
             }
         }
 
