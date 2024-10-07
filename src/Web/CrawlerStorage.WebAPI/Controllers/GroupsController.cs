@@ -52,7 +52,7 @@ public class GroupsController : BaseController
 
         if (groupDto != null)
         {
-            await this.groupsService.ProcessAsync(groupDto);
+            this.groupsService.Process(groupDto);
 
             var dbGroup = await this.repository
                 .AllAsNoTracking()
