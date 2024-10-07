@@ -1,6 +1,7 @@
 ﻿namespace CrawlerStorage.Services;
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +22,7 @@ public class GroupsService : IGroupsService
         this.httpClient = httpClient;
     }
 
-    public async Task ProcessAsync(GroupDto groupDto)
+    public void Process(GroupDto groupDto)
     {
         foreach (var documentDto in groupDto.Documents)
         {
@@ -44,42 +45,73 @@ public class GroupsService : IGroupsService
 
         if (response.IsSuccessStatusCode)
         {
-            var content = await response.Content.ReadAsByteArrayAsync();
-            switch (input.CrawlerId)
-            {
-                case 1:
-                    var responseAsString = await response.Content.ReadAsStringAsync();
-                    while (responseAsString == "Rate Limit Exceeded")
-                    {
-                        await Task.Delay(3000);
-                        response = await this.httpClient.GetAsync(input.Url);
-                        responseAsString = await response.Content.ReadAsStringAsync();
-                    }
-
-                    var htmlDocument = new HtmlDocument();
-                    htmlDocument.LoadHtml(responseAsString);
-
-                    var html = htmlDocument.DocumentNode.SelectSingleNode("//div[@class='container']");
-                    if (html != null)
-                    {
-                        content = Encoding.UTF8.GetBytes(html.OuterHtml);
-                    }
-
-                    break;
-            }
-
+            var content = await this.ReadContentAsync(response, input.CrawlerId, input.Url);
             var name = this.CreateNameFromUrl(input.Url);
             var documentDto = this.CreateDocument(response, content, input.Url);
 
-            return new GroupDto
+            var groupDto = new GroupDto
             {
                 Name = name,
                 CrawlerId = input.CrawlerId,
                 Documents = [documentDto]
             };
+
+            if (input.DocumentUrls.Count > 0)
+            {
+                var documentDtos = await this.CreateDocumentsAsync(input);
+                groupDto.Documents.AddRange(documentDtos);
+            }
+
+            return groupDto;
         }
 
         return null;
+    }
+
+    private async Task<byte[]> ReadContentAsync(HttpResponseMessage response, int crawlerId, string url)
+    {
+        var content = await response.Content.ReadAsByteArrayAsync();
+        switch (crawlerId)
+        {
+            case 1:
+                var responseAsString = await response.Content.ReadAsStringAsync();
+                while (responseAsString == "Rate Limit Exceeded")
+                {
+                    await Task.Delay(3000);
+                    response = await this.httpClient.GetAsync(url);
+                    responseAsString = await response.Content.ReadAsStringAsync();
+                }
+
+                var htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml(responseAsString);
+
+                var html = htmlDocument.DocumentNode.SelectSingleNode("//div[@class='container']");
+                if (html != null)
+                {
+                    content = Encoding.UTF8.GetBytes(html.OuterHtml);
+                }
+
+                break;
+        }
+
+        return content;
+    }
+
+    private async Task<List<DocumentDto>> CreateDocumentsAsync(GroupInputDto input)
+    {
+        var list = new List<DocumentDto>();
+
+        foreach (var url in input.DocumentUrls)
+        {
+            var response = await this.httpClient.GetAsync(url);
+            var content = await this.ReadContentAsync(response, input.CrawlerId, url);
+            var name = this.CreateNameFromUrl(url);
+            var documentDto = this.CreateDocument(response, content, url);
+
+            list.Add(documentDto);
+        }
+
+        return list;
     }
 
     private DocumentDto CreateDocument(HttpResponseMessage response, byte[] content, string url)
