@@ -16,16 +16,12 @@ public class Group : BaseEntity<int>
     [MaxLength(250)]
     public string Name { get; set; }
 
-    //[Required]
-    //public DateTime Date { get; set; }
-
     [Required]
     public int CrawlerId { get; set; }
     public virtual Crawler Crawler { get; set; }
 
     [Required]
     public int OperationId { get; set; }
-    public virtual Operation Operation { get; set; }
 
     [Column(TypeName = "VARBINARY(MAX)")]
     public byte[] Content { get; set; }

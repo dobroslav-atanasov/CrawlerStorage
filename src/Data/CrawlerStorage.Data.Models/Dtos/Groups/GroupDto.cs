@@ -4,6 +4,8 @@ using CrawlerStorage.Data.Models.Dtos.Documents;
 
 public class GroupDto
 {
+    public int Id { get; set; }
+
     public Guid Identifier { get; set; }
 
     public string Name { get; set; }

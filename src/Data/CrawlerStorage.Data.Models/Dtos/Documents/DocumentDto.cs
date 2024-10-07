@@ -2,6 +2,8 @@
 
 public class DocumentDto
 {
+    public int Id { get; set; }
+
     public Guid Identifier { get; set; }
 
     public string Name { get; set; }
@@ -13,6 +15,8 @@ public class DocumentDto
     public string Url { get; set; }
 
     public string Encoding { get; set; }
+
+    public int OperationId { get; set; }
 
     public string MD5 { get; set; }
 
