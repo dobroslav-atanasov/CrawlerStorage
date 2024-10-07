@@ -59,6 +59,13 @@ public class CrawlerStorageRepository<TEntity> : IRepository<TEntity>
 
     public void Update(TEntity entity)
     {
-        throw new NotImplementedException();
+        //this.Context.Update(entity);
+        var entry = this.Context.Entry(entity);
+        if (entry.State == EntityState.Detached)
+        {
+            this.DbSet.Attach(entity);
+        }
+
+        entry.State = EntityState.Modified;
     }
 }
