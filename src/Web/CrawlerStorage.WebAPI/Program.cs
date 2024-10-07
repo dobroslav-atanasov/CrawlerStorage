@@ -43,10 +43,19 @@ builder.Services.AddAutoMapper(Assembly.Load(GlobalConstants.ASSEMBLY_AUTOMAPPER
 // Database
 builder.Services.AddDbContext<CrawlerStorageDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString(GlobalConstants.CRAWLER_STORAGE_CONNECTION_STRING));
     options.UseLazyLoadingProxies();
-    //options.UseNpgsql(builder.Configuration.GetConnectionString(GlobalConstants.CRAWLER_STORAGE_CONNECTION_STRING));
-    //options.UseInMemoryDatabase("InMemory");
+
+    if (builder.Environment.IsDevelopment())
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString(GlobalConstants.CRAWLER_STORAGE_CONNECTION_STRING));
+
+        //options.UseInMemoryDatabase("InMemory");
+    }
+    else
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString(GlobalConstants.CRAWLER_STORAGE_CONNECTION_STRING));
+        //options.UseNpgsql(builder.Configuration.GetConnectionString(GlobalConstants.CRAWLER_STORAGE_CONNECTION_STRING));
+    }
 });
 
 // Repositories
@@ -79,6 +88,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-PrepareDatabase.Population(app);
+//if (builder.Environment.IsProduction())
+{
+    PrepareDatabase.Population(app);
+}
 
 app.Run();

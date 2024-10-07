@@ -8,6 +8,7 @@ using CrawlerStorage.Data.Repositories;
 using CrawlerStorage.Services.Intrefaces;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 public class GroupsController : BaseController
 {
@@ -23,7 +24,7 @@ public class GroupsController : BaseController
     }
 
     [HttpGet(Name = nameof(GetAllGroups))]
-    public async Task<IActionResult> GetAllGroups()
+    public IActionResult GetAllGroups()
     {
         var groups = this.repository.AllAsNoTracking();
         var groupReadDtos = this.mapper.Map<IEnumerable<GroupReadDto>>(groups);
@@ -34,7 +35,14 @@ public class GroupsController : BaseController
     [HttpGet("{id}", Name = nameof(GetGroupById))]
     public async Task<IActionResult> GetGroupById(int id)
     {
-        return this.Ok();
+        var group = await this.repository.FindAsync(id);
+        if (group != null)
+        {
+            var groupReadDto = this.mapper.Map<GroupReadDto>(group);
+            return this.Ok(groupReadDto);
+        }
+
+        return this.NotFound();
     }
 
     [HttpPost(Name = nameof(CreateGroup))]
@@ -46,7 +54,10 @@ public class GroupsController : BaseController
         {
             await this.groupsService.ProcessAsync(groupDto);
 
-            var dbGroup = await this.repository.GetAsync(x => x.Name == groupDto.Name && x.CrawlerId == model.CrawlerId);
+            var dbGroup = await this.repository
+                .AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.Name == groupDto.Name && x.CrawlerId == model.CrawlerId);
+
             if (dbGroup == null)
             {
                 var group = this.mapper.Map<Group>(groupDto);
@@ -61,6 +72,15 @@ public class GroupsController : BaseController
             {
                 var dbGroupDto = this.mapper.Map<GroupDto>(dbGroup);
                 var isUpdated = this.groupsService.CheckForUpdate(groupDto, dbGroupDto);
+
+                if (isUpdated)
+                {
+                    this.groupsService.Update(groupDto, dbGroupDto);
+                    var group = this.mapper.Map<Group>(dbGroupDto);
+
+                    this.repository.Update(group);
+                    await this.repository.SaveChangesAsync();
+                }
 
                 return this.NoContent();
             }
