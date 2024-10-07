@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.67" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Common\CrawlerStorage.Common.Helpers\CrawlerStorage.Common.Helpers.csproj" />
     <ProjectReference Include="..\..\Data\CrawlerStorage.Data\CrawlerStorage.Data.csproj" />
   </ItemGroup>
