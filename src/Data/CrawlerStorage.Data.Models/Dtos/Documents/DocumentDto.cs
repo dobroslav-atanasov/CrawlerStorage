@@ -16,7 +16,7 @@ public class DocumentDto
 
     public string Encoding { get; set; }
 
-    public int OperationId { get; set; }
+    public string Operation { get; set; }
 
     public string MD5 { get; set; }
 

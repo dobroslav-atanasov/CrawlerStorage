@@ -28,7 +28,8 @@ public class Document : BaseEntity<int>
     public string Url { get; set; }
 
     [Required]
-    public int OperationId { get; set; }
+    [MaxLength(10)]
+    public string Operation { get; set; }
 
     [Required]
     [MaxLength(50)]

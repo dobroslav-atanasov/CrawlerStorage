@@ -27,14 +27,14 @@ public class GroupsService : IGroupsService
         {
             documentDto.Identifier = Guid.NewGuid();
             documentDto.MD5 = MD5Helper.Hash(documentDto.Content);
-            documentDto.OperationId = (int)OperationType.Add;
+            documentDto.Operation = OperationType.Add.ToString();
         }
 
         var folder = groupDto.Name;
         var zipFolderName = $"{folder}.zip";
         groupDto.Name = zipFolderName;
         groupDto.Identifier = Guid.NewGuid();
-        groupDto.OperationId = (int)OperationType.Add;
+        groupDto.Operation = OperationType.Add.ToString();
         groupDto.Content = ZipHelper.ZipGroup(groupDto);
     }
 
@@ -116,15 +116,15 @@ public class GroupsService : IGroupsService
 
             if (dbDocumentDto == null)
             {
-                documentDto.OperationId = (int)OperationType.Add;
+                documentDto.Operation = OperationType.Add.ToString();
                 isUpdated = true;
             }
             else
             {
                 if (documentDto.MD5 != dbDocumentDto.MD5 || documentDto.Format != dbDocumentDto.Format)
                 {
-                    documentDto.OperationId = (int)OperationType.Update;
-                    dbDocumentDto.OperationId = (int)OperationType.Update;
+                    documentDto.Operation = OperationType.Update.ToString();
+                    dbDocumentDto.Operation = OperationType.Update.ToString();
                     isUpdated = true;
                 }
             }
@@ -134,7 +134,7 @@ public class GroupsService : IGroupsService
         {
             if (!groupDto.Documents.Where(d => d.Name == documentDto.Name).Any())
             {
-                documentDto.OperationId = (int)OperationType.Delete;
+                documentDto.Operation = OperationType.Delete.ToString();
                 isUpdated = true;
             }
         }
@@ -144,41 +144,41 @@ public class GroupsService : IGroupsService
 
     public void Update(GroupDto groupDto, GroupDto dbGroupDto)
     {
-        dbGroupDto.OperationId = (int)OperationType.Update;
+        dbGroupDto.Operation = OperationType.Update.ToString();
         dbGroupDto.Content = groupDto.Content;
 
         foreach (var documentDto in groupDto.Documents)
         {
-            if (documentDto.OperationId == (int)OperationType.Add)
+            if (documentDto.Operation == OperationType.Add.ToString())
             {
-                documentDto.OperationId = (int)OperationType.Add;
+                documentDto.Operation = OperationType.Add.ToString();
                 dbGroupDto.Documents.Add(documentDto);
             }
 
-            if (documentDto.OperationId == (int)OperationType.Update)
+            if (documentDto.Operation == OperationType.Update.ToString())
             {
                 var doc = dbGroupDto.Documents.Single(d => d.Name == documentDto.Name);
-                doc.OperationId = (int)OperationType.Update;
+                doc.Operation = OperationType.Update.ToString();
                 doc.Format = documentDto.Format;
                 doc.Url = documentDto.Url;
                 doc.MD5 = documentDto.MD5;
             }
 
-            if (documentDto.OperationId == (int)OperationType.None)
+            if (documentDto.Operation == OperationType.None.ToString())
             {
                 var doc = dbGroupDto.Documents.Single(d => d.Name == documentDto.Name);
-                doc.OperationId = (int)OperationType.None;
+                doc.Operation = OperationType.None.ToString();
             }
         }
 
         foreach (var documentDto in groupDto.Documents)
         {
-            if (documentDto.OperationId == (int)OperationType.Delete)
+            if (documentDto.Operation == OperationType.Delete.ToString())
             {
                 var doc = groupDto.Documents.FirstOrDefault(d => d.Name == documentDto.Name);
                 if (doc != null)
                 {
-                    doc.OperationId = documentDto.OperationId;
+                    doc.Operation = documentDto.Operation;
                 }
             }
         }

@@ -21,7 +21,8 @@ public class Group : BaseEntity<int>
     public virtual Crawler Crawler { get; set; }
 
     [Required]
-    public int OperationId { get; set; }
+    [MaxLength(10)]
+    public string Operation { get; set; }
 
     [Column(TypeName = "VARBINARY(MAX)")]
     public byte[] Content { get; set; }

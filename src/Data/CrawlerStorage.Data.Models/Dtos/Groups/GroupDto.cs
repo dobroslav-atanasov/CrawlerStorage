@@ -12,7 +12,7 @@ public class GroupDto
 
     public int CrawlerId { get; set; }
 
-    public int OperationId { get; set; }
+    public string Operation { get; set; }
 
     public byte[] Content { get; set; }
 

@@ -18,8 +18,6 @@ public class CrawlerStorageDbContext : DbContext
 
     public virtual DbSet<Group> Groups { get; set; }
 
-    public virtual DbSet<Operation> Operations { get; set; }
-
     public override int SaveChanges()
     {
         return this.SaveChanges(true);
