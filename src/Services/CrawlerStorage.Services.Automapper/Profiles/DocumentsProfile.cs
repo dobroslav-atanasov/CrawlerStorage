@@ -11,5 +11,7 @@ public class DocumentsProfile : Profile
     {
         this.CreateMap<DocumentDto, Document>()
             .ReverseMap();
+
+        this.CreateMap<Document, DocumentReadDto>();
     }
 }
