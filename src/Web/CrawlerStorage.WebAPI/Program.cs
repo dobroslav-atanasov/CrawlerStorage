@@ -47,9 +47,8 @@ builder.Services.AddDbContext<CrawlerStorageDbContext>(options =>
 
     if (builder.Environment.IsDevelopment())
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString(GlobalConstants.CRAWLER_STORAGE_CONNECTION_STRING));
-
-        //options.UseInMemoryDatabase("InMemory");
+        //options.UseSqlServer(builder.Configuration.GetConnectionString(GlobalConstants.CRAWLER_STORAGE_CONNECTION_STRING));
+        options.UseInMemoryDatabase("InMemory");
     }
     else
     {
@@ -88,7 +87,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//if (builder.Environment.IsProduction())
+if (builder.Environment.IsProduction())
 {
     PrepareDatabase.Population(app);
 }
