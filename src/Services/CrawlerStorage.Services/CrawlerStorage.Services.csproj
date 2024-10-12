@@ -8,11 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.67" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\CrawlerStorage.Common.Helpers\CrawlerStorage.Common.Helpers.csproj" />
     <ProjectReference Include="..\..\Data\CrawlerStorage.Data\CrawlerStorage.Data.csproj" />
+    <ProjectReference Include="..\CrawlerStorage.Services.Automapper\CrawlerStorage.Services.Automapper.csproj" />
   </ItemGroup>
 
 </Project>
