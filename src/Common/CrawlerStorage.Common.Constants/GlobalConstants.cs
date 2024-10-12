@@ -11,4 +11,6 @@ public static class GlobalConstants
     public const string LOG_FILE_PATH = "Logs/log.txt";
 
     public const string CRAWLER_STORAGE_CONNECTION_STRING = "CrawlerStorageDb";
+
+    public const string RABBIT_MQ = "RabbitMQ";
 }
