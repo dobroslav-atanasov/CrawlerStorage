@@ -4,6 +4,7 @@ using Asp.Versioning;
 
 using CrawlerStorage.Common.Constants;
 using CrawlerStorage.Data;
+using CrawlerStorage.Data.Models.Settings;
 using CrawlerStorage.Data.Repositories;
 using CrawlerStorage.Services;
 using CrawlerStorage.Services.Intrefaces;
@@ -28,6 +29,8 @@ builder.Services.AddApiVersioning(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 
+builder.Services.Configure<RabbitMQModel>(builder.Configuration.GetSection(GlobalConstants.RABBIT_MQ));
+
 // Logger
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -47,8 +50,9 @@ builder.Services.AddDbContext<CrawlerStorageDbContext>(options =>
 
     if (builder.Environment.IsDevelopment())
     {
-        //options.UseSqlServer(builder.Configuration.GetConnectionString(GlobalConstants.CRAWLER_STORAGE_CONNECTION_STRING));
-        options.UseInMemoryDatabase("InMemory");
+        options.UseSqlServer(builder.Configuration.GetConnectionString(GlobalConstants.CRAWLER_STORAGE_CONNECTION_STRING));
+
+        //options.UseInMemoryDatabase("InMemory");
     }
     else
     {
@@ -62,6 +66,7 @@ builder.Services.AddScoped(typeof(CrawlerStorageRepository<>));
 
 // Services
 builder.Services.AddHttpClient<IGroupsService, GroupsService>();
+builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -70,6 +75,8 @@ builder.Services.AddSwaggerGen(setup =>
     setup.SwaggerDoc(GlobalConstants.API_VERSION_1,
         new OpenApiInfo { Title = $"{GlobalConstants.API_VERSION_TITLE} {GlobalConstants.API_VERSION_1}", Version = $"{GlobalConstants.API_VERSION_1}.0" });
 });
+
+builder.Services.AddHostedService<MessageBusSubscriber>();
 
 var app = builder.Build();
 
@@ -87,7 +94,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-if (builder.Environment.IsProduction())
+//if (builder.Environment.IsProduction())
 {
     PrepareDatabase.Population(app);
 }
