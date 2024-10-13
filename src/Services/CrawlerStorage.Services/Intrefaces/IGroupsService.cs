@@ -11,4 +11,6 @@ public interface IGroupsService
     bool CheckForUpdate(GroupDto groupDto, GroupDto dbGroupDto);
 
     void Update(GroupDto groupDto, GroupDto dbGroupDto);
+
+    string CreateNameFromUrl(string url);
 }

@@ -130,7 +130,7 @@ public class GroupsService : IGroupsService
         return documentDto;
     }
 
-    private string CreateNameFromUrl(string url)
+    public string CreateNameFromUrl(string url)
     {
         var uri = new Uri(url);
         return $"{uri.Host}_{string.Join("_", uri.Segments.Where(x => x != "/").Select(x => x.Replace("/", string.Empty)))}".ToLower();
