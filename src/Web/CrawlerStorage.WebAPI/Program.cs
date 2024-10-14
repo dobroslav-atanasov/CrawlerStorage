@@ -66,7 +66,9 @@ builder.Services.AddScoped(typeof(CrawlerStorageRepository<>));
 
 // Services
 builder.Services.AddHttpClient<IGroupsService, GroupsService>();
+builder.Services.AddHttpClient<IHttpService, HttpService>();
 builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
+builder.Services.AddScoped<IDocumentsService, DocumentsService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
